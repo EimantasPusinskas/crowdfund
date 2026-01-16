@@ -21,8 +21,8 @@ contract Handler is Test {
         vm.deal(address(this), amount);
 
         try crowdfund.fund{value: amount}(id) {
-        // This only runs if the fund() call was successful!
-        phantomBalance += amount;
+            // This only runs if the fund() call was successful!
+            phantomBalance += amount;
         } catch {
             // If it reverted, we do nothing.
         }

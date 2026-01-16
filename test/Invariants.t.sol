@@ -13,7 +13,7 @@ contract CrowdfundInvariants is StdInvariant, Test {
     function setUp() public {
         crowdfund = new Crowdfund();
         handler = new Handler(crowdfund);
-        
+
         // Tell Foundry to only fuzz the functions inside the Handler
         targetContract(address(handler));
     }
