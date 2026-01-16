@@ -21,7 +21,6 @@ contract CrowdfundTest is Test {
     event Withdrawn(uint256 indexed campaignId, uint256 amount);
     event Refunded(uint256 indexed campaignId, address indexed funder, uint256 amount);
 
-
     function setUp() public {
         // Deploy contract
         crowdfund = new Crowdfund();
@@ -34,8 +33,6 @@ contract CrowdfundTest is Test {
         // Give users some money
         vm.deal(alice, 20 ether);
         vm.deal(bob, 5 ether);
-
-        
     }
 
     // --- Constructor Tests ---
@@ -43,13 +40,9 @@ contract CrowdfundTest is Test {
     function test_DeploymentState() public {
         vm.prank(owner);
         crowdfund.createCampaign(GOAL, DURATION);
-      
-        (
-            uint256 goal, 
-            uint256 deadline, 
-            uint256 raised, 
-            address payable campaignOwner,
-        ) = crowdfund.campaigns(campaignId);
+
+        (uint256 goal, uint256 deadline, uint256 raised, address payable campaignOwner,) =
+            crowdfund.campaigns(campaignId);
 
         assertEq(goal, GOAL);
         assertEq(deadline, block.timestamp + DURATION);
@@ -103,7 +96,7 @@ contract CrowdfundTest is Test {
         vm.prank(owner);
         vm.expectEmit(true, false, false, true);
         emit Withdrawn(campaignId, 10 ether);
-        
+
         crowdfund.withdraw(campaignId);
 
         assertEq(owner.balance, ownerBalanceBefore + 10 ether);
@@ -206,17 +199,16 @@ contract CrowdfundTest is Test {
         // Create a second campaign
         vm.prank(bob);
         crowdfund.createCampaign(20 ether, DURATION); // This will be ID 1
-        
+
         // Alice funds Campaign 0
         vm.prank(alice);
         crowdfund.fund{value: 5 ether}(0);
-        
+
         // Check that Campaign 1 is still at 0
         (,, uint256 raised1,,) = crowdfund.campaigns(1);
         assertEq(raised1, 0, "Campaign 1 should not have funds from Campaign 0");
     }
 
-    
     function test_MultipleContributions() public {
         vm.startPrank(alice);
         crowdfund.fund{value: 1 ether}(0);
@@ -230,10 +222,10 @@ contract CrowdfundTest is Test {
         Rejector rejector = new Rejector();
         vm.prank(address(rejector));
         crowdfund.createCampaign(GOAL, DURATION); // ID 1
-        
+
         crowdfund.fund{value: GOAL}(1);
         vm.warp(block.timestamp + DURATION);
-        
+
         vm.prank(address(rejector));
         vm.expectRevert("Refund failed"); // withdraw uses "Transfer failed"
         crowdfund.withdraw(1);
@@ -242,12 +234,12 @@ contract CrowdfundTest is Test {
     function test_Revert_RefundTransferFailed() public {
         Rejector rejector = new Rejector();
         vm.deal(address(rejector), 1 ether);
-        
+
         vm.prank(address(rejector));
         crowdfund.fund{value: 1 ether}(0);
-        
+
         vm.warp(block.timestamp + DURATION);
-        
+
         vm.prank(address(rejector));
         vm.expectRevert("Refund failed"); // refund uses "Refund failed"
         crowdfund.refund(0);

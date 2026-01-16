@@ -9,11 +9,11 @@ pragma solidity ^0.8.20;
  */
 contract Crowdfund {
     struct Campaign {
-        uint256 goal;           // Target amount to raise (in wei)
-        uint256 deadline;       // Timestamp when the campaign ends
-        uint256 moneyRaised;    // Current total raised
-        address payable owner;  // Creator of the campaign
-        uint256 campaignId;     
+        uint256 goal; // Target amount to raise (in wei)
+        uint256 deadline; // Timestamp when the campaign ends
+        uint256 moneyRaised; // Current total raised
+        address payable owner; // Creator of the campaign
+        uint256 campaignId;
     }
 
     mapping(uint256 => Campaign) public campaigns;
@@ -46,7 +46,6 @@ contract Crowdfund {
         // Increments campaign count so that next campaign created gets a new ID
         campaignCount++;
     }
-   
 
     /**
      * @notice Allows users to contribute ETH to a specific campaign
