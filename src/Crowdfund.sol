@@ -17,7 +17,7 @@ contract Crowdfund {
     }
 
     mapping(uint256 => Campaign) public campaigns;
-    uint256 campaignCount = 0;
+    uint256 public campaignCount = 0;
 
     // Events to allow off-chain apps to react to contract changes
     event Funded(uint256 indexed campaignId, address indexed funder, uint256 amount);
