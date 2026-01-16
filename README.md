@@ -12,7 +12,7 @@ A robust, multi-campaign crowdfunding smart contract built with **Solidity** and
 
 ---
 
-## 🛡️ Testing & Security
+## Testing & Security
 
 This project employs a multi-layered testing strategy to ensure the safety of user funds:
 
