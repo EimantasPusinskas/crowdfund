@@ -28,7 +28,8 @@ jobs:
       - name: Install Dependencies
         run: |
           rm -rf lib
-          forge install
+          git submodule update --init --recursive
+          forge install --no-commit
 
       - name: Show Forge version
         run: forge --version
