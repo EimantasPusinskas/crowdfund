@@ -28,8 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           rm -rf lib
-          git submodule update --init --recursive
-          forge install --no-commit
+          forge install foundry-rs/forge-std --no-commit
 
       - name: Show Forge version
         run: forge --version

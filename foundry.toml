@@ -1,6 +1,13 @@
 [profile.default]
-src = "src"
-out = "out"
-libs = ["lib"]
+src = 'src'
+out = 'out'
+libs = ['lib']
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+# We embed remappings here so the compiler doesn't need a separate file
+remappings = [
+    'forge-std/=lib/forge-std/src/',
+    'ds-test/=lib/forge-std/lib/ds-test/src/'
+]
+
+[profile.ci]
+verbosity = 4
