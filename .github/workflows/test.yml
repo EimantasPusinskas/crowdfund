@@ -28,7 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           rm -rf lib
-          forge install foundry-rs/forge-std --no-commit
+          forge install foundry-rs/forge-std 
 
       - name: Show Forge version
         run: forge --version
